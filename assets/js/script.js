@@ -1,21 +1,32 @@
 // function where is asked and validated the lenght of the password
 var getLength= function() {
-  var length = window.prompt('Please select the length of your password, choose a number between 8 and no more than 128:');
+  var length = window.prompt('Please select the length of your password, choose a number between 8 and 128:');
   length = parseInt(length);
   if (length < 8 || length > 128 || !length){
-    window.alert("You need to provide a valid answer! Please try again.");
+    window.alert("You need to provide a valid number! Please try again.");
     return getLength();
   }
   return length
+}
+// function where is asked to choose the characters type to use
+var getPrompType= function(charType){
+  var promptChoice = window.confirm('Would you like your password to have ' + charType + ' characters? Please select OK if your agree');
+  console.log(promptChoice)
+  if (promptChoice) {
+    window.alert('Your decided to have ' + charType +' on your password');
+    return true;
+  }else{
+   return false;
+  }
 }
 
 //Object with the criteria needed to create the password
 var passwordInfo = {
   length: getLength(),
-  upperCase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  lowerCase: "abcdefghijklmnopqrstuvwxyz",
-  numeric: "0123456789",
-  characters: '!@#$%^&*()_+~`|}{[]\:;?><,./-=',
+  upperCase: [getPrompType('upperCase'),"ABCDEFGHIJKLMNOPQRSTUVWXYZ"],
+  lowerCase: [getPrompType('lowerCase'),"abcdefghijklmnopqrstuvwxyz"],
+  numeric: [getPrompType('numeric'),"0123456789"],
+  special: [getPrompType('special'),'!@#$%^&*()_+~`|}{[]\:;?><,./-='],
   pwd: '',
 }
 console.log(passwordInfo);
