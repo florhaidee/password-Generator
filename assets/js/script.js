@@ -23,14 +23,35 @@ var getPrompType= function(charType){
 //Object with the criteria needed to create the password
 var passwordInfo = {
   length: getLength(),
-  upperCase: [getPrompType('upperCase'),"ABCDEFGHIJKLMNOPQRSTUVWXYZ"],
-  lowerCase: [getPrompType('lowerCase'),"abcdefghijklmnopqrstuvwxyz"],
-  numeric: [getPrompType('numeric'),"0123456789"],
-  special: [getPrompType('special'),'!@#$%^&*()_+~`|}{[]\:;?><,./-='],
+  upperCase: ['false',"ABCDEFGHIJKLMNOPQRSTUVWXYZ"],
+  lowerCase: ['false',"abcdefghijklmnopqrstuvwxyz"],
+  numeric: ['false',"0123456789"],
+  special: ['false','!@#$%^&*()_+~`|}{[]\:;?><,./-='],
   pwd: '',
 }
+// function to validate Input: at least one type of character must be true
+function validateInput(inputInfo){
+ if (inputInfo.upperCase[0] || inputInfo.lowerCase[0] || inputInfo.numeric[0] || inputInfo.special[0] ) {
+    return true;
+ } else {
+    window.alert("You need to pick at least one Type of character. PLease try again.");
+    return false;
+  }
+}
 console.log(passwordInfo);
+var generatePassword2 = function(){
+  passwordInfo.upperCase[0] = getPrompType('upperCase');
+  passwordInfo.lowerCase[0] = getPrompType('lowerCase');
+  passwordInfo.numeric[0] = getPrompType('numeric');
+  passwordInfo.special[0] = getPrompType('special');
+  if (validateInput(passwordInfo)) {
+    console.log (passwordInfo)
+  }else {
+    generatePassword2()
+  }
+}
 
+generatePassword2();
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
