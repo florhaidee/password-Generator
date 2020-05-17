@@ -1,7 +1,11 @@
+// function where is asked and validated the lenght of the password
 var getLength= function() {
   var length = window.prompt('Please select the length of your password, choose a number between 8 and no more than 128:');
   length = parseInt(length);
-  console.log(length);
+  if (length < 8 || length > 128 || !length){
+    window.alert("You need to provide a valid answer! Please try again.");
+    return getLength();
+  }
   return length
 }
 
