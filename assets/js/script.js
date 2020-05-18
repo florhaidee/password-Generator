@@ -22,7 +22,7 @@ var getPrompType= function(charType){
 
 //Object with the criteria needed to create the password
 var passwordInfo = {
-  length: getLength(),
+  length: 0,
   upperCase: ['false',"ABCDEFGHIJKLMNOPQRSTUVWXYZ"],
   lowerCase: ['false',"abcdefghijklmnopqrstuvwxyz"],
   numeric: ['false',"0123456789"],
@@ -38,20 +38,64 @@ function validateInput(inputInfo){
     return false;
   }
 }
-console.log(passwordInfo);
+var randomNumber = function(min,max) {
+  var value = Math.floor(Math.random() * (max - min + 1)) + min;
+  return value;
+};
+//console.log(passwordInfo);
 var generatePassword2 = function(){
   passwordInfo.upperCase[0] = getPrompType('upperCase');
   passwordInfo.lowerCase[0] = getPrompType('lowerCase');
   passwordInfo.numeric[0] = getPrompType('numeric');
   passwordInfo.special[0] = getPrompType('special');
   if (validateInput(passwordInfo)) {
+    // call function generatepassword(passwordInfo)
     console.log (passwordInfo)
   }else {
     generatePassword2()
   }
-}
+};
+// function where we validate char and concat the string pwd
+var validatechar = function(obj){
+  var num = randomNumber(0,3);
+  switch (num) {
+    case 0:
+      if (obj.upperCase[0]){
+        console.log(obj.upperCase[1].length);
+        obj.pwd += obj.upperCase[1].charAt(randomNumber(0 , obj.upperCase[1].length));
+        console.log(obj.pwd);
+        break;
+      }
+    case 1:
+      if (obj.lowerCase[0]){
+        obj.pwd += obj.lowerCase[1].charAt(randomNumber(0 , obj.lowerCase[1].length));
+        break;
+      }
+    case 2:
+      if (obj.numeric[0]){
+        obj.pwd += obj.numeric[1].charAt(randomNumber(0 , obj.numeric[1].length));
+        break;
+      }
+    case 3:
+      if (obj.special[0]){
+        obj.pwd += obj.special[1].charAt(randomNumber(0 , obj.special[1].length));
+        break; 
+      }
+    default:
+      validatechar(obj)
+      break;
+  }
+};
 
-generatePassword2();
+var generatePassword = function() {
+  passwordInfo.length = getLength();
+  generatePassword2();
+  for (var i = 0; i < passwordInfo.length; i++) {
+    validatechar(passwordInfo)
+  }
+  return passwordInfo.pwd
+};
+
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
