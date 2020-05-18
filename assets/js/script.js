@@ -28,6 +28,14 @@ var passwordInfo = {
   numeric: ['false',"0123456789"],
   special: ['false','!@#$%^&*()_+~`|}{[]\:;?><,./-='],
   pwd: '',
+  reset: function(){
+    this.length = 0;
+    this.upperCase = ['false',"ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+    this.lowerCase = ['false',"abcdefghijklmnopqrstuvwxyz"];
+    this.numeric = ['false',"0123456789"];
+    this.special = ['false','!@#$%^&*()_+~`|}{[]\:;?><,./-='];
+    this.pwd = '';
+  }
 }
 // function to validate Input: at least one type of character must be true
 function validateInput(inputInfo){
@@ -42,17 +50,16 @@ var randomNumber = function(min,max) {
   var value = Math.floor(Math.random() * (max - min + 1)) + min;
   return value;
 };
-//console.log(passwordInfo);
-var generatePassword2 = function(){
+//function where we load the object and call the function to validate that al least one choice is selected
+var promptChoices = function(){
   passwordInfo.upperCase[0] = getPrompType('upperCase');
   passwordInfo.lowerCase[0] = getPrompType('lowerCase');
   passwordInfo.numeric[0] = getPrompType('numeric');
   passwordInfo.special[0] = getPrompType('special');
   if (validateInput(passwordInfo)) {
-    // call function generatepassword(passwordInfo)
     console.log (passwordInfo)
   }else {
-    generatePassword2()
+    promptChoices()
   }
 };
 // function where we validate char and concat the string pwd
@@ -61,9 +68,7 @@ var validatechar = function(obj){
   switch (num) {
     case 0:
       if (obj.upperCase[0]){
-        console.log(obj.upperCase[1].length);
         obj.pwd += obj.upperCase[1].charAt(randomNumber(0 , obj.upperCase[1].length));
-        console.log(obj.pwd);
         break;
       }
     case 1:
@@ -88,8 +93,9 @@ var validatechar = function(obj){
 };
 
 var generatePassword = function() {
+  passwordInfo.reset();
   passwordInfo.length = getLength();
-  generatePassword2();
+  promptChoices();
   for (var i = 0; i < passwordInfo.length; i++) {
     validatechar(passwordInfo)
   }
@@ -103,9 +109,7 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
