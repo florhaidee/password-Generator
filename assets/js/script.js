@@ -19,7 +19,6 @@ var getPrompType= function(charType){
    return false;
   }
 }
-
 //Object with the criteria needed to create the password
 var passwordInfo = {
   length: 0,
@@ -46,11 +45,12 @@ function validateInput(inputInfo){
     return false;
   }
 }
+// function that return a random number between the minimun and maximun number provided
 var randomNumber = function(min,max) {
   var value = Math.floor(Math.random() * (max - min + 1)) + min;
   return value;
 };
-//function where we load the object and call the function to validate that al least one choice is selected
+//function where we load the object with the character types selected by user
 var promptChoices = function(){
   passwordInfo.upperCase[0] = getPrompType('upperCase');
   passwordInfo.lowerCase[0] = getPrompType('lowerCase');
@@ -62,7 +62,7 @@ var promptChoices = function(){
     promptChoices()
   }
 };
-// function where we validate char and concat the string pwd
+// function where we validate character selected (at least one must be selected) and concat the string pwd
 var validatechar = function(obj){
   var num = randomNumber(0,3);
   switch (num) {
@@ -91,7 +91,7 @@ var validatechar = function(obj){
       break;
   }
 };
-
+// function used to call and generated the password 
 var generatePassword = function() {
   passwordInfo.reset();
   passwordInfo.length = getLength();
